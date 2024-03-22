@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+        function redirectToApp() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            // Kiểm tra nếu là iOS
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.location.href = 'https://apps.apple.com/vn/app/chiti/id1522912419';
+            } else if (/android/i.test(userAgent)) {
+                // Nếu là Android
+                window.location.href = 'https://play.google.com/store/apps/details?id=com.vantientu.RiceBooks&pcampaignid=web_share';
+            } else {
+                // Nếu không phải là mobile, chuyển hướng đến trang web hoặc liên kết mặc định
+                window.location.href = 'https://www.facebook.com/profile.php?id=100066968462985';
+            }
+        }
+    </script>
+</head>
+<body onload="redirectToApp()">
+    Redirecting...
+</body>
+</html>
