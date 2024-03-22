@@ -1,24 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redirecting...</title>
+    <title>Chiti...</title>
     <script type="text/javascript">
-        function redirectToApp() {
-            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            // Kiểm tra nếu là iOS
-            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                window.location.href = 'https://apps.apple.com/vn/app/chiti/id1522912419';
-            } else if (/android/i.test(userAgent)) {
-                // Nếu là Android
-                window.location.href = 'https://play.google.com/store/apps/details?id=com.vantientu.RiceBooks&pcampaignid=web_share';
-            } else {
-                // Nếu không phải là mobile, chuyển hướng đến trang web hoặc liên kết mặc định
-                window.location.href = 'https://www.facebook.com/profile.php?id=100066968462985';
-            }
+        // Define your app's scheme and the store URLs
+        // Assume the URL is "https://example.com/?product=123&category=books"
+
+        // Create a URLSearchParams object from the current URL
+        const params = new URLSearchParams(window.location.search);
+
+        var appScheme = 'chiti://';
+        var appStoreUrl = 'https://apps.apple.com/vn/app/chiti/id1522912419';
+        var playStoreUrl = 'https://play.google.com/store/apps/details?id=com.vantientu.RiceBooks&pcampaignid=web_share';
+        var facebookPage = 'https://www.facebook.com/profile.php?id=100066968462985'
+
+        function openAppOrStore() {
+            var now = new Date().valueOf();
+            setTimeout(function () {
+                if (new Date().valueOf() - now > 100) return;
+                if (isiOS) {
+                    window.location.href = appStoreUrl
+                } else if (isAndroid) {
+                    window.location.href = playStoreUrl
+                } else {
+                    window.location.href = facebookPage
+                }
+            }, 25);
+
+            window.location.href = appScheme;
         }
+
+        function isiOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+        
+        function isAndroid() {
+            return /android/i.test(navigator.userAgent) && !window.MSStream;
+        }
+
+        // Call this function when the user clicks your link/button
+        // openAppOrStore();
+        // onload="openAppOrStore()"
     </script>
+
 </head>
-<body onload="redirectToApp()">
-    Redirecting...
+<body>
+    <h1>Product Details</h1>
+        <div id="product-info">
+            <!-- Product details will be inserted here -->
+        </div>
+
+        <script>
+            // Function to get URL parameters
+            function getQueryParam(param) {
+                const params = new URLSearchParams(window.location.search);
+                return params.get(param);
+            }
+
+            // Assuming the URL is something like "?productName=Widget&price=19.99"
+            const link = getQueryParam('link');
+
+            // Insert these details into the page
+            document.getElementById('product-info').innerHTML = `
+                <p>Link: ${link}</p>
+            `;
+        </script>
 </body>
 </html>
